@@ -1,10 +1,9 @@
 import * as THREE from "three";
 import { StateSelector, EqualityChecker } from "zustand/vanilla";
 import { ThreeContext, RootState, RenderCallback } from "./core/store";
-import { buildGraph, ObjectMap, is } from "./core/utils";
+import { buildGraph } from "./core/utils";
 import {
   createComputed,
-  createEffect,
   createMemo,
   createSignal,
   onCleanup,
@@ -48,11 +47,10 @@ export function useThree<T = RootState, U = T>(
 
   createComputed(() => {
     let cleanup = useStore().subscribe<U>(
-      // @ts-expect-error
+      // @ts-expect-error: we are using a deprecated feature
       selector,
       (v) => {
-        // @ts-expect-error
-        setSignal(() => v);
+        setSignal(() => v as unknown as U);
       },
       equalityFn
     );

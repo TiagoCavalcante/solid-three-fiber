@@ -5,7 +5,8 @@
     "outDir": "./types",
     "rootDir": "./src",
     "target": "esnext",
-    "lib": ["dom", "esnext"]
+    "lib": ["dom", "esnext"],
+    "moduleResolution": "Node"
   },
   "exclude": ["dist", "build", "node_modules"]
 }

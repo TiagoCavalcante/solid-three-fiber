@@ -1,5 +1,6 @@
 import { Mesh } from "three";
-import { createSignal, useFrame } from "../src";
+import { createSignal } from "solid-js";
+import { useFrame } from "../src";
 
 export function Box() {
   let mesh: Mesh | undefined;

@@ -1,8 +1,7 @@
-import * as THREE from "three";
-import { extend, createThreeRoot, RenderProps } from "../core";
+import { createThreeRoot, RenderProps } from "../core";
 import { createPointerEvents } from "./events";
 import { RootState, ThreeContext } from "../core/store";
-import { Accessor, createEffect, onCleanup, JSX, mergeProps } from "solid-js";
+import { Accessor, JSX, onCleanup, mergeProps } from "solid-js";
 import { insert } from "../renderer";
 import { Instance } from "../core/renderer";
 import { StoreApi } from "zustand/vanilla";
@@ -10,11 +9,8 @@ import { EventManager } from "../core/events";
 import { log } from "../solid";
 import { threeReconciler } from "..";
 
-extend(THREE);
-
 export interface Props extends Omit<RenderProps<HTMLCanvasElement>, "size" | "events"> {
-  // ,
-  //   HTMLAttributes<HTMLDivElement>
+  // HTMLAttributes<HTMLDivElement>
   children: JSX.Element;
   fallback?: JSX.Element;
   // resize?: ResizeOptions
@@ -47,7 +43,7 @@ export interface Props extends Omit<RenderProps<HTMLCanvasElement>, "size" | "ev
 // ];
 
 export function Canvas(props: Props) {
-  props = mergeProps(
+  const allProps = mergeProps(
     {
       height: "100vh",
       width: "100vw"
@@ -58,15 +54,15 @@ export function Canvas(props: Props) {
   let canvas: HTMLCanvasElement = (<canvas style={{ height: "100%", width: "100%" }} />) as any;
   let containerRef: HTMLDivElement = (
     <div
-      id={props.id}
-      class={props.class}
+      id={allProps.id}
+      class={allProps.class}
       style={{
-        height: props.height,
-        width: props.width,
+        height: allProps.height,
+        width: allProps.width,
         position: "relative",
         overflow: "hidden"
       }}
-      tabIndex={props.tabIndex}
+      tabIndex={allProps.tabIndex}
     >
       {canvas}
     </div>
@@ -75,8 +71,8 @@ export function Canvas(props: Props) {
   const root = createThreeRoot(canvas, {
     events: createPointerEvents,
     size: containerRef.getBoundingClientRect(),
-    camera: props.camera,
-    shadows: props.shadows
+    camera: allProps.camera,
+    shadows: allProps.shadows
   });
 
   new ResizeObserver(entries => {
@@ -88,7 +84,7 @@ export function Canvas(props: Props) {
     root.getState().scene as unknown as Instance,
     (
       (
-        <ThreeContext.Provider value={root}>{props.children}</ThreeContext.Provider>
+        <ThreeContext.Provider value={root}>{allProps.children}</ThreeContext.Provider>
       ) as unknown as Accessor<Instance[]>
     )()
   );

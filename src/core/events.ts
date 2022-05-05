@@ -1,10 +1,4 @@
 import * as THREE from "three";
-// @ts-ignore
-// import {
-//   ContinuousEventPriority,
-//   DiscreteEventPriority,
-//   DefaultEventPriority,
-// } from "react-reconciler/constants";
 import type { StoreApi as UseStore } from "zustand/vanilla";
 import type { Instance } from "./renderer";
 import type { RootState } from "./store";

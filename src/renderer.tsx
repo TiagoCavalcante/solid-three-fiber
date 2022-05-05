@@ -20,8 +20,6 @@ export const {
   mergeProps
 } = threeRenderer;
 
-export * from "solid-js";
-
 type DynamicProps<T> = T & {
   children?: any;
   component?: Component<T> | string | keyof JSX.IntrinsicElements;

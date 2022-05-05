@@ -4,7 +4,7 @@ export const is = {
   str: (a: any): a is string => typeof a === 'string',
   num: (a: any): a is number => typeof a === 'number',
   und: (a: any) => a === void 0,
-  arr: (a: any) => Array.isArray(a),
+  arr: <T>(a: any): a is Array<T> => Array.isArray(a),
   equ(a: any, b: any) {
     // Wrong type or one of the two undefined, doesn't match
     if (typeof a !== typeof b || !!a !== !!b) return false

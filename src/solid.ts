@@ -31,7 +31,7 @@ export function createSolidRenderer({
   attach
 }: ThreeRenderer) {
   return createRenderer<Instance>({
-    // @ts-ignore
+    // @ts-expect-error: another deprecation
     createElement(element: string, args) {
       log("three", "createElement", element);
       if (element === "scene") {

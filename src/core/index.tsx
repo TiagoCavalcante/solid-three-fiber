@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { StoreApi as UseStore } from "zustand/vanilla";
-import { dispose, calculateDpr, applyProps } from "./utils";
+import { dispose, applyProps } from "./utils";
 import {
   Renderer,
   createThreeStore,
@@ -13,7 +13,7 @@ import {
 import { extend, Root } from "./renderer";
 import { createLoop, addEffect, addAfterEffect, addTail } from "./loop";
 import { EventManager } from "./events";
-import { createEffect, PropsWithChildren } from "solid-js";
+import { createEffect } from "solid-js";
 
 export type { IntersectionEvent, EventHandlers, Intersection, Camera } from "./events";
 export { attach, applyProp } from "./utils";
@@ -135,7 +135,6 @@ function createThreeRoot<TCanvas extends HTMLElement>(
     onCreated?.(state);
 
     state.invalidate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
 
   return store;
@@ -146,25 +145,20 @@ function unmountComponentAtNode<TElement extends Element>(
   callback?: (canvas: TElement) => void
 ) {
   const root = roots.get(canvas);
-  // const fiber = root?.fiber;
-  // if (fiber) {
-  //   const state = root?.store.getState();
-  //   if (state) state.internal.active = false;
+  if (root?.store) {
+    const state = root?.store.getState();
+    if (state) state.internal.active = false;
 
-  //   setTimeout(() => {
-  //     try {
-  //       state.events.disconnect?.();
-  //       state.gl?.renderLists?.dispose?.();
-  //       state.gl?.forceContextLoss?.();
-  //       if (state.gl?.xr) state.internal.xr.disconnect();
-  //       dispose(state);
-  //       roots.delete(canvas);
-  //       if (callback) callback(canvas);
-  //     } catch (e) {
-  //       /* ... */
-  //     }
-  //   }, 500);
-  // }
+    setTimeout(() => {
+      state.events.disconnect?.();
+      state.gl?.renderLists?.dispose?.();
+      state.gl?.forceContextLoss?.();
+      if (state.gl?.xr) state.internal.xr.disconnect();
+      dispose(state);
+      roots.delete(canvas);
+      if (callback) callback(canvas);
+    }, 500);
+  }
 }
 
 // function createPortal(

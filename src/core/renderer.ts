@@ -17,7 +17,7 @@ import { EventHandlers, removeInteractivity } from "./events";
 import { log } from "../solid";
 import { dispose } from ".";
 
-export type Root = { store: UseStore<RootState> };
+export type Root = { store: UseStore<RootState>; };
 
 export type LocalState = {
   root: UseStore<RootState>;
@@ -50,7 +50,7 @@ export type BaseInstance = Omit<
   add: (...object: Instance[]) => Instance;
   raycast?: (raycaster: THREE.Raycaster, intersects: THREE.Intersection[]) => void;
 };
-export type Instance = BaseInstance & { [key: string]: any };
+export type Instance = BaseInstance & { [key: string]: any; };
 
 export type InstanceProps = {
   [key: string]: unknown;
@@ -64,7 +64,7 @@ export type InstanceProps = {
 
 interface Catalogue {
   [name: string]: {
-    new (...args: any): Instance;
+    new(...args: any): Instance;
   };
 }
 
@@ -255,13 +255,9 @@ function createThreeRenderer<TCanvas>(roots: Map<TCanvas, Root>, getEventPriorit
       // Dispose item whenever the reconciler feels like it
       if (shouldDispose && child.type !== "Scene") {
         // scheduleCallback(idlePriority, () => {
-        try {
-          log("three", "dispose", child);
-          child.dispose?.();
-          dispose(child);
-        } catch (e) {
-          /* ... */
-        }
+        log("three", "dispose", child);
+        child.dispose?.();
+        dispose(child);
         // });
       }
 

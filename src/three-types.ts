@@ -85,7 +85,7 @@ export type LightNode<T extends THREE.Light, P> = Overwrite<
   { color?: Color }
 >;
 
-// export type AudioProps = Object3DNode<THREE.Audio, typeof THREE.Audio>
+export type AudioProps = Object3DNode<THREE.Audio, typeof THREE.Audio>
 export type AudioListenerProps = Object3DNode<
   THREE.AudioListener,
   typeof THREE.AudioListener
@@ -115,7 +115,7 @@ export type LineSegmentsProps = Object3DNode<
   typeof THREE.LineSegments
 >;
 export type LineLoopProps = Object3DNode<THREE.LineLoop, typeof THREE.LineLoop>;
-// export type LineProps = Object3DNode<THREE.Line, typeof THREE.Line>
+export type LineProps = Object3DNode<THREE.Line, typeof THREE.Line>
 export type PointsProps = Object3DNode<THREE.Points, typeof THREE.Points>;
 export type GroupProps = Object3DNode<THREE.Group, typeof THREE.Group>;
 
